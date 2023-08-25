@@ -1,0 +1,8 @@
+/* application-specific CSS should go in this file */
+.data-box {
+    margin-left: 2rem;
+    display: none;
+}
+.data-box.show {
+    display: block;
+}

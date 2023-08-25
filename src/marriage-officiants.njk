@@ -1,0 +1,60 @@
+---
+layout: core/layout.njk
+title: "Marriage Officiants - Demo Site"
+description: "A demo site built using the Ontario.ca JAMstack toolkit"
+fr_page_url: "/célébrants-du-mariage"
+date: 2023-08-23T18:02:57.312Z
+published_date: 2023-08-23T18:02:57.312Z
+---
+
+<p>This is a demo site based on the <a href="https://data.ontario.ca/dataset/registered-marriage-officiants">Registered marriage officiants</a> dataset from the <a href="https://data.ontario.ca/">Ontario Data Catalogue</a>. Built by <a href="https://github.com/syed-ods">Syed Hassan</a> using the <a href="https://github.com/ongov/Ontario.ca-Jamstack-Toolkit">Ontario.ca Jamstack Toolkit</a> and vanilla JavaScript.</p>
+
+<p>Details on <strong>{{ app["marriageOfficiants"].officiants.length }}</strong> officiants from <strong>{{ app["marriageOfficiants"].affiliations.length }}</strong> affiliations, in <strong>{{ app["marriageOfficiants"].municipalities.length }}</strong> municipalities.</p>
+
+<hr>
+
+<h3>By Municipality</h3>
+<button class="toggle-button ontario-button ontario-button--secondary">Show</button>
+<div class="data-box">
+    {% for municipality, officiants in app["marriageOfficiants"].officiants | sort(attribute="Municipality") | groupby("Municipality") %}
+
+        <h4>{{ municipality }}</h4>
+        <button class="toggle-button ontario-button ontario-button--secondary">Show</button>
+        <div class="data-box">
+            {% for officiant in officiants %}
+            <div>
+                <ul>
+                    <li><b>Name:</b> {{ officiant["Last Name"] + ", " + officiant["First Name"] }}</li>
+                    <li><b>Affiliation:</b> {{ officiant["Affiliation"] }} </li>
+                </ul>
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% endfor %}
+</div>
+
+<hr>
+
+<h3>By Affiliation</h3>
+<button class="toggle-button ontario-button ontario-button--secondary">Show</button>
+<div class="data-box">
+    {% for affiliation, officiants in app["marriageOfficiants"].officiants | sort(attribute="Affiliation") | groupby("Affiliation") %}
+
+        <h4>{{ affiliation | default("No Affiliation", true) }}</h4>
+        <button class="toggle-button ontario-button ontario-button--secondary">Show</button>
+        <div class="data-box">
+            {% for officiant in officiants %}
+            <div>
+                <ul>
+                    <li><b>Name:</b> {{ officiant["Last Name"] + ", " + officiant["First Name"] }}</li>
+                    <li><b>Municipality:</b> {{ officiant["Municipality"] }} </li>
+                </ul>
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% endfor %}
+</div>
