@@ -11,18 +11,10 @@ module.exports = async function() {
 
     let officiants = Papa.parse(file, {
         header: true,
-        skipEmptyLines: true
+        skipEmptyLines: true 
     }).data;
 
-    let municipalities = officiants.map(officiant => officiant["Municipality"]);
-    let uniqueM = [...new Set(municipalities)].sort();
-
-    let affiliations = officiants.map(officiant => officiant["Affiliation"]);
-    let uniqueA = [...new Set(affiliations)].sort();
-
     return {
-        officiants,
-        uniqueA,
-        uniqueM
+        officiants
     }
 }
